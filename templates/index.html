@@ -1,0 +1,110 @@
+<!--
+Copyright 2018 IBM Corp. All Rights Reserved.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot QnA</title>
+    <link rel="stylesheet" href="static/css/bootstrap.css">
+    <link rel="stylesheet" href="static/css/app.css">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <script src="static/js/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+    <section style="min-height: 85vh;">
+        <div class="container-fluid" style="margin-top: 50px;">
+            <div class="row justify-content-center">
+                <!-- Application Title -->
+                <div class="col-md-12 title-section">
+                    <h1 class="text-center">Demo</h1>
+                </div>
+                <!-- /Application Title -->
+                <!-- Application Description -->
+                <div class="col-md-8" style="margin-bottom: 1rem; margin-top: 2rem;">
+                    <p>Esta es una demo que responde preguntas sobre la actualidad peruana. </p>
+                </div>
+                <!-- /Application Description -->
+                <!-- ChatBox -->
+                <div class="col-md-8">
+                    <div id="chatbox" class="panel-heading chatbox clearfix border">
+                        <div class="panel-title reply">{{ display_text }}</div>
+                    </div>
+                    <div class="input-group" width="100%">
+                        <input id="text-input" type="text" name="input" class="form-control border-top-0"/>
+                        <div class="input-group-append">
+                            <button id="submit" type="submit" class="btn btn-primary" onclick="sendRequest();">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /ChatBox -->
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container-fluid">
+            <footer class="footer">
+                <br/>
+                <!-- <p style="float:left">Developed at the <a href="https://developer.ibm.com/code/open/centers/codait/">IBM Center for Open-Source Data & AI Technologies.</a></p> -->
+                <!-- <p style="float:right">Source code available on <a href="https://github.com/IBM/MAX-Question-Answering-Web-App">GitHub</a>.</p> -->
+            </footer>
+        </div>
+    </section>
+</body>
+
+<script type="text/javascript">
+    let state = 1
+    const defaultLoadingMessage = "Estamos buscando la noticia"
+    const secretLoadingMessages = ['Espere un momento...']
+
+    // sends request to Flask containing user input and state of conversation, just when user clicks the button "Send"
+    function sendRequest() {
+        let input = $("#text-input").val();
+        $("#chatbox").append('<div class="panel-title message">' + input + '</div>')
+        $("#text-input").val(""); // set empty
+
+        if (input === "") {
+            $("#chatbox").append('<div class="panel-title reply">Por favor, escriba algo.</div>')
+            return 
+        }
+
+
+        let loadingMessage = Math.floor(Math.random() * 10) < 5 ? defaultLoadingMessage : secretLoadingMessages[Math.floor(Math.random() * secretLoadingMessages.length)]
+        let loadingTimeout = setTimeout(() => $("#chatbox").append(`<div style="color:red" class="panel-title reply loading"><i>${loadingMessage}</div>`), 1000)
+
+        $.ajax({
+            type: "POST",
+            url: "{{ url_for('chat') }}",
+            data: JSON.stringify({"input": input,
+                    "state": state}), //json that is sent
+            contentType: "application/json",
+            success: function(data) { //json that received
+                clearTimeout(loadingTimeout)
+                $(".loading").remove()
+                // get values as "response" to show in chat
+                $("#chatbox").append('<div class="panel-title reply">' + data["response"] + '</div>') 
+                state = data["state"]; 
+            }
+        });
+    }
+
+    // send message when user presses enter
+    $("#text-input").keypress(function(key) {
+        if (key.which == 13) {
+            sendRequest();
+            return false;
+        }
+    });
+</script>
+
+</html>
