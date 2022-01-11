@@ -7,7 +7,6 @@ import time
 import pandas as pd
 from tqdm import tqdm
 
-XD=False
 number_days = 1
 url_head = 'https://gestion.pe'
 
@@ -18,13 +17,11 @@ driver = webdriver.Chrome(executable_path=r"C:\dchrome\chromedriver_96.exe")
 current_date = datetime.now()
 dates = []
 for i in range(number_days):
+    current_date -= timedelta(days=1)
     # starts the day before
     before_day = current_date.strftime('%Y-%m-%d %H:%M:%S')[:10]
     dates.append(before_day)
-    current_date -= timedelta(days=1)
-
 print(dates)
-
 
 records = []
 for date in dates:
@@ -71,7 +68,7 @@ for date in dates:
             # could be because of video new
             continue
 
+# Save extracted news as .csv
 df = pd.DataFrame(records, columns=['date', 'title', 'text', 'url'])
 print(df.shape[0])
-
 df.to_csv('data/{}_{}-news.csv'.format(dates[0], number_days), index=False)
