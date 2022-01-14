@@ -17,6 +17,10 @@ Dada a enorme quantidade de informações que são compartilhadas nas notícias,
 
 ### 1. Introdução
 
+Há muitos anos, os pesquisadores buscam criar um assistente virtual que possa entender a linguagem natural para automatizar tarefas como suporte a perguntas sobre temas específicos (closed-domain), ou até mesmo manter uma conversa quase humana. Esse processo de compreensão é conhecido como Natural Language Processing (NLP), que nos últimos anos, graças às redes neurais conhecidas como [Transformers](https://arxiv.org/abs/1706.03762), conseguiram grandes feitos. O último avanço que chamou a atenção foi o [GPT-3](https://arxiv.org/abs/2005.14165), um modelo que resolve diferentes tarefas de NLP para as quais não foi especificamente treinado.
+
+Dado que a informação nos meios de comunicação aumenta a cada dia, decidiu-se implementar um sistema de perguntas e respostas que nos permita obter respostas sobre as notícias nacionais. Para isso, contamos com um modelo de deep learning baseado nas já mencionadas redes Transformers, e notícias peruanas extraídas com webscrapping. Parte da contribuição deste projeto foi demonstrar uma aplicação de deep learning interessante para a área de NLP, que pode ser replicada em qualquer computador, pois não requer GPUs.
+
 ### 2. Modelagem
 
 A modelagem deste projeto está organizada em uma metodologia de trabalho composta por quatro etapas: i) Extração e pré-processamento de dados; ii) Information Retrieval; iii) Modelagem e inferência; e iv) Interface.
