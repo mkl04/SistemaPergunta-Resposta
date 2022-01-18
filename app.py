@@ -53,4 +53,4 @@ def chat():
 
 
 if __name__ == "__main__":
-    app.run(port=args.port, debug=True, host='localhost')
+    app.run(port=args.port, debug=False, host='localhost')

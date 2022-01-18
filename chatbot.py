@@ -22,11 +22,16 @@ import unicodedata
 import six
 from nltk import word_tokenize
 
+import torch
 from transformers import pipeline
 
+THRESHOLD = 0.6
+N_CONTEXTS = 5
+
+device = 0 if torch.cuda.is_available() else -1
 df = pd.read_csv('data/2022-01-07_7-news.csv')
 model_name = "mrm8488/distill-bert-base-spanish-wwm-cased-finetuned-spa-squad2-es"
-model = pipeline('question-answering', model=model_name, tokenizer=model_name)
+model = pipeline('question-answering', model=model_name, tokenizer=model_name, device=device)
 
 def get_opening_message():
     """The variable starting message."""
@@ -74,7 +79,7 @@ def do_bm25(query, best_n=3):
 # state 1
 def get_question(question):
     """Return the answer with best score"""
-    contexts = do_bm25(question, best_n=5)
+    contexts = do_bm25(question, best_n=N_CONTEXTS)
  
     best_score = 0
     for context in contexts:
@@ -84,7 +89,7 @@ def get_question(question):
             best_score = res['score']
             best_answer = res['answer']
         print( "score: {} -- answer: {}".format(res['score'], res['answer']) )
-        if best_score > 0.6:
+        if best_score > THRESHOLD:
             break
 
     return "La respuesta es: {}\nCon una probabilidad de {}%\n\nPuede realizar otra pregunta: ".format(
