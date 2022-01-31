@@ -42,8 +42,12 @@ Para a escolha da resposta, primeiro são escolhidas as 5 notícias mais relacio
 
 **iv) Interface**
 
-O template foi obtido do [Web App da IBM](https://github.com/IBM/MAX-Question-Answering-Web-App). Isso permite uma comunicação mais dinâmica com os usuários. Você pode inserir quantas perguntas quiser. O modelo atualmente realiza as inferências usando a CPU, então pode demorar um pouco.
-
+O template foi obtido do [Web App da IBM](https://github.com/IBM/MAX-Question-Answering-Web-App). Isso permite uma comunicação mais dinâmica com os usuários. O usuário pode inserir quantas perguntas quiser. O sistema foi atualizado e agora pode fazer as inferências usando CPU ou GPU. No caso de usar CPU, a inferência pode demorar um pouco.
+Para inicializar o sistema, só precisa rodar o comando do seguinte jeito:
+```
+python app.py
+```
+Depois disso, deve acessar a url `http://localhost:8070/` no seu navegador onde podera visualizar o chatbot.
 
 ### 3. Resultados
 
