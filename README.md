@@ -1,4 +1,4 @@
-# Sistema_Pergunta-Resposta
+# [Sistema Pergunta-Resposta sobre a situação atual no Peru em textos de revistas usando redes Transformers](https://github.com/mkl04/SistemaPergunta-Resposta)
 
 
 #### Aluno: [Maykol Jiampiers Campos Trinidad](https://github.com/mkl04)
@@ -53,7 +53,7 @@ Depois disso, deve acessar a url `http://localhost:8070/` no seu navegador onde 
 
 Como pode ser visto na imagem, o chatbot consegue responder corretamente para as perguntas de exemplo. Além disso, mostra um percentual de precisão de inferência para saber o quão confiável foi essa resposta. Obviamente, este aplicativo nem sempre mostra a resposta certa, mas talvez com um ajuste fino, podeeria conseguir melhorar a certeza.
 
-![Alt text](imgs/results.PNG?raw=true "Demo")
+![Algumas perguntas feitas](imgs/results.PNG?raw=true "Demo")
 
 ### 4. Conclusões
 
