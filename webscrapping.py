@@ -11,7 +11,8 @@ number_days = 1
 url_head = 'https://gestion.pe'
 
 # make sure your version of webdriver is the same of your current Chrome
-driver = webdriver.Chrome(executable_path=r"C:\dchrome\chromedriver_96.exe")
+# https://chromedriver.storage.googleapis.com/index.html?path=114.0.5735.90/
+driver = webdriver.Chrome(executable_path=r"C:\dchrome\chromedriver_v114.exe")
 
 # list all the dates
 current_date = datetime.now()

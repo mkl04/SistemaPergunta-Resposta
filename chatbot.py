@@ -25,11 +25,12 @@ from nltk import word_tokenize
 import torch
 from transformers import pipeline
 
-THRESHOLD = 0.6
+THRESHOLD = 0.5
 N_CONTEXTS = 5
 
 device = 0 if torch.cuda.is_available() else -1
-df = pd.read_csv('data/2022-01-07_7-news.csv')
+# df = pd.read_csv('data/2022-01-07_7-news.csv')
+df = pd.read_csv('data/2023-08-04_1-news.csv')
 model_name = "mrm8488/distill-bert-base-spanish-wwm-cased-finetuned-spa-squad2-es"
 model = pipeline('question-answering', model=model_name, tokenizer=model_name, device=device)
 
